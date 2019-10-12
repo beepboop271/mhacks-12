@@ -25,6 +25,7 @@
     "persistent": false
   },
   "browser_action": {
-    "default_title": "Help Hackermans"
+    "default_title": "Help Hackermans",
+    "default_popup": "popup.html"
   }
 }

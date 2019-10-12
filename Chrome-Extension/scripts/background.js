@@ -1,15 +1,31 @@
 chrome.runtime.onInstalled.addListener(function() {
     chrome.contextMenus.create({
-        "title": "Test parent item",
-        "id": "TEST",
+        "title": "Add note",
+        "id": "ADD_NOTE",
         "contexts": ["selection"]
     });
 });
 
+selections = [];
+
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    alert(info.selectionText);
+    //alert(info.selectionText);
+    selections.push(info.selectionText);
     getServerData();
 });
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if (request.msg === "tick") {
+            chrome.runtime.sendMessage({
+                msg: "tock",
+                data: {
+                    selections: selections
+                }
+            });
+        }
+    }
+);
 
 
 function getServerData() {
