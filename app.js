@@ -48,6 +48,7 @@ app.post("/new/project", (req, res) => {
   pushProject(getReferenceFromPath(req.body.path));
   res.end("yes");
 });
+
 app.post("/new/note", (req, res) => {
   getReferenceFromPath(req.body.path).child("url").on("value", (snapshot) => {
     if(!snapshot.val()) {
@@ -73,7 +74,7 @@ app.post("/remove", (req, res) => {
 });
 
 function getReferenceFromPath(path) {
-  path = path.split(".");
+  path = path.split("***");
   let ref = user;
   for (let i = 0; i < path.length; i++) {
     ref = ref.child(path[i]);
@@ -107,7 +108,6 @@ function removePath(path) {
   em.emit("update");
 }
 
-
 /////handling events => listener functions
 //////////////////
 em.on("refresh", () => {
@@ -118,36 +118,3 @@ em.on("update", () => {
 });
 
 module.exports = em;
-
-
-
-
-
-
-// function pushProject(path, name) {
-//   path.update({name: name});
-// }
-
-
-// function pushWebpage(path, url) {
-//   path.update({url: url});
-// }
-
-//will be change later depending on how the file is received
-// let projectName = "project1";
-// let webpage = "Google";
-// let url = "this is a url";
-// let phrase = "hi";
-// let index = "123";
-// let comment = "this is a comment";
-
-// pushProject("project1");
-// pushData()
-// pushWebpage(user.child(projectName)
-//                 .child(webpage), url);
-// pushData(user.child(projectName)
-//              .child(webpage), phrase, index, comment);
-// pushWebpage(user.child("project2")
-//                 .child("wikipedia"), "url2");
-// pushData(user.child(projectName)
-//              .child(webpage), "hello", "1", "wow");
