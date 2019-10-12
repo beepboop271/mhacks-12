@@ -3,6 +3,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mustacheExpress = require('mustache-express');
 //const cors = require("cors");
+const events = require("events");
+
+const em = new events.EventEmitter();
 
 const serviceAccount = require("./auth.json");
 
@@ -38,7 +41,7 @@ app.get("/viewtest/:args", (req, res) => {
 });
 
 app.listen(80, () => {
-  console.log("yah yeet");
+  console.log("Launched on port 80");
 });
 
 app.post("/new/project", (req, res) => {
@@ -46,6 +49,11 @@ app.post("/new/project", (req, res) => {
   res.end("yes");
 });
 app.post("/new/note", (req, res) => {
+  getReferenceFromPath(req.body.path).child("url").on("value", (snapshot) => {
+    if(!snapshot.val()) {
+      getReferenceFromPath(req.body.path).update({"url":req.body.url});
+    }
+  });
   pushData(getReferenceFromPath(req.body.path),
            req.body.phrase,
            req.body.index,
@@ -75,6 +83,7 @@ function getReferenceFromPath(path) {
 
 function pushProject(path) {
   path.push({initial:"value"});
+  em.emit("update");
 }
 
 function pushData(path, phrase, index, comment) {
@@ -83,17 +92,37 @@ function pushData(path, phrase, index, comment) {
     index: index,
     comments: comment
   });
+  em.emit("update");
 }
 
 function updateComment(path, comment) {
   path.update({
     comments: comment
   });
+  em.emit("update");
 }
 
 function removePath(path) {
   path.remove();
+  em.emit("update");
 }
+
+
+/////handling events => listener functions
+//////////////////
+em.on("refresh", () => {
+  em.emit("update");
+});
+em.on("update", () => {
+  em.emit("newData", user);
+});
+
+module.exports = em;
+
+
+
+
+
 
 // function pushProject(path, name) {
 //   path.update({name: name});
