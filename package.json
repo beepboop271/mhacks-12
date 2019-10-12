@@ -1,0 +1,10 @@
+{
+    "name": "mhacks12",
+    "description": "it is gamer time",
+    "version": "0.0.1",
+    "dependencies": {
+        "firebase-admin": "",
+        "express": "",
+        "body-parser": ""
+    }
+}
