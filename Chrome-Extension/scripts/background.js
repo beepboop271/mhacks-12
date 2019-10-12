@@ -9,9 +9,15 @@ chrome.runtime.onInstalled.addListener(function() {
 selections = [];
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    //alert(info.selectionText);
     selections.push(info.selectionText);
-    getServerData();
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+            msg: "note",
+            data: {
+                selection: info.selectionText
+            }
+        });
+    });
 });
 
 chrome.runtime.onMessage.addListener(
@@ -27,10 +33,8 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
-
 function getServerData() {
     fetch("http://127.0.0.1/fetchtest")
-
         .then(function (response) {
             return response.text();
     })
