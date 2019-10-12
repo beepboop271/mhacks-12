@@ -3,8 +3,6 @@ const fs = require("fs");
 const mime = require("mime");
 const em = require("./app.js");
 
-let database = {};
-
 // event listener
 
 em.on("newData", (ref) => {
@@ -30,6 +28,7 @@ function sendFile(res, filepath, data) {
 ///////////////////
 
 const server = http.createServer((req, res) => {
+  em.emit("refresh");
   if (req.url == "/") {
     filepath = "./webpage.html";
   } else {

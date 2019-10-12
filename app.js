@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.listen(80, () => {
-  console.log("yah yeet");
+  console.log("Launched on port 80");
 });
 
 app.post("/new/project", (req, res) => {
@@ -84,9 +84,9 @@ function removePath(path) {
 
 /////handling events => listener functions
 //////////////////
-setTimeout(() => {
+em.on("refresh", () => {
   em.emit("update");
-}, 0);
+});
 em.on("update", () => {
   em.emit("newData", user);
 });
