@@ -81,14 +81,14 @@ function removePath(path) {
   em.emit("update");
 }
 
-// setTimeout(() => {
-//   em.emit("update");
-// }, 2000);
+
 /////handling events => listener functions
 //////////////////
+setTimeout(() => {
+  em.emit("update");
+}, 0);
 em.on("update", () => {
   em.emit("newData", user);
-  console.log("hi");
 });
 
 module.exports = em;

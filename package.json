@@ -5,6 +5,7 @@
     "dependencies": {
         "firebase-admin": "",
         "express": "",
-        "body-parser": ""
+        "body-parser": "",
+        "socket.io": ""
     }
 }
