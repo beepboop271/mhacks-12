@@ -1,6 +1,6 @@
 {
     "name": "mhacks12",
-    "description": "it is gamer time",
+    "description": "should be changed",
     "version": "0.0.1",
     "dependencies": {
         "body-parser": "^1.19.0",
