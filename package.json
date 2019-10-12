@@ -6,5 +6,9 @@
         "firebase-admin": "",
         "express": "",
         "body-parser": ""
+    },
+    "devDependencies": {
+        "cors": "^2.8.5",
+        "mustache-express": "^1.3.0"
     }
 }

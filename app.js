@@ -1,6 +1,8 @@
 const firebase = require("firebase-admin");
 const express = require("express");
 const bodyParser = require("body-parser");
+const mustacheExpress = require('mustache-express');
+//const cors = require("cors");
 
 const serviceAccount = require("./auth.json");
 
@@ -13,8 +15,27 @@ const db = firebase.database();
 const user = db.ref("user1");
 
 const app = express();
+app.engine('html', mustacheExpress());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.set('view engine', 'html');
+app.set('views', '');
+//app.use(cors);
+
+app.get("/fetchtest", (req, res) => {
+  console.log("Something tried to fetch");
+  res.end("qwasdrgfki");
+});
+
+app.get("/viewtest", (req, res) => {
+  console.log("Something tried to view");
+  res.render('view', {name: "args"});
+});
+
+app.get("/viewtest/:args", (req, res) => {
+  console.log("Something tried to view");
+  res.render('view', {name: req.params.args});
+});
 
 app.listen(80, () => {
   console.log("yah yeet");
