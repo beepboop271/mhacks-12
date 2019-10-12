@@ -1,6 +1,9 @@
 const firebase = require("firebase-admin");
 const express = require("express");
 const bodyParser = require("body-parser");
+const events = require("events");
+
+const em = new events.EventEmitter();
 
 const serviceAccount = require("./auth.json");
 
@@ -54,6 +57,7 @@ function getReferenceFromPath(path) {
 
 function pushProject(path) {
   path.push({initial:"value"});
+  em.emit("update");
 }
 
 function pushData(path, phrase, index, comment) {
@@ -62,17 +66,37 @@ function pushData(path, phrase, index, comment) {
     index: index,
     comments: comment
   });
+  em.emit("update");
 }
 
 function updateComment(path, comment) {
   path.update({
     comments: comment
   });
+  em.emit("update");
 }
 
 function removePath(path) {
   path.remove();
+  em.emit("update");
 }
+
+// setTimeout(() => {
+//   em.emit("update");
+// }, 2000);
+/////handling events => listener functions
+//////////////////
+em.on("update", () => {
+  em.emit("newData", user);
+  console.log("hi");
+});
+
+module.exports = em;
+
+
+
+
+
 
 // function pushProject(path, name) {
 //   path.update({name: name});
