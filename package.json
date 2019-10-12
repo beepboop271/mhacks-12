@@ -1,11 +1,13 @@
 {
     "name": "mhacks12",
-    "description": "it is gamer time",
+    "description": "should be changed",
     "version": "0.0.1",
     "dependencies": {
         "firebase-admin": "",
         "express": "",
-        "body-parser": ""
+        "body-parser": "",
+        "socket.io": "",
+        "mime": ""
     },
     "devDependencies": {
         "cors": "^2.8.5",
