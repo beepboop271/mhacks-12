@@ -28,6 +28,11 @@ app.post("/new/project", (req, res) => {
   res.end("yes");
 });
 app.post("/new/note", (req, res) => {
+  getReferenceFromPath(req.body.path).child("url").on("value", (snapshot) => {
+    if(!snapshot.val()) {
+      getReferenceFromPath(req.body.path).update({"url":req.body.url});
+    }
+  });
   pushData(getReferenceFromPath(req.body.path),
            req.body.phrase,
            req.body.index,
