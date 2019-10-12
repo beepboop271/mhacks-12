@@ -3,13 +3,14 @@ console.log("ASDASDASD");
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.msg === "note") {
-            let name = window.location.href;
+            let name = window.location.hostname.replaceAll(`./g`, "-");
             let projectName = "first-project";
              postNoteData({
                 path: projectName + "***" + name,
                 phrase: request.data.selection,
                 index: 0,
-                comment: "no comment"
+                comment: "no comment",
+                url: window.location.href
             });
         }
 });
