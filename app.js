@@ -67,16 +67,24 @@ app.post("/new/project", (req, res) => {
   pushProject(getReferenceFromPath(req.body.path));
   res.end("yes");
 });
+
 app.post("/new/note", (req, res) => {
+    console.log(req.body);
+    /*
   getReferenceFromPath(req.body.path).child("url").on("value", (snapshot) => {
-    if(!snapshot.val()) {
+    /*
+      if(!snapshot.val()) {
       getReferenceFromPath(req.body.path).update({"url":req.body.url});
     }
+
   });
+
+     */
   pushData(getReferenceFromPath(req.body.path),
            req.body.phrase,
            req.body.index,
-           req.body.comment);
+           req.body.comment,
+           req.body.url);
   res.end("yes");
 });
 
@@ -92,7 +100,7 @@ app.post("/remove", (req, res) => {
 });
 
 function getReferenceFromPath(path) {
-  path = path.split(".");
+  path = path.split("***");
   let ref = user;
   for (let i = 0; i < path.length; i++) {
     ref = ref.child(path[i]);
@@ -105,11 +113,12 @@ function pushProject(path) {
   em.emit("update");
 }
 
-function pushData(path, phrase, index, comment) {
+function pushData(path, phrase, index, comment, url) {
   path.push({
     phrase: phrase,
     index: index,
-    comments: comment
+    comments: comment,
+    url: url
   });
   em.emit("update");
 }
@@ -126,7 +135,6 @@ function removePath(path) {
   em.emit("update");
 }
 
-
 /////handling events => listener functions
 //////////////////
 em.on("refresh", () => {
@@ -137,36 +145,3 @@ em.on("update", () => {
 });
 
 module.exports = em;
-
-
-
-
-
-
-// function pushProject(path, name) {
-//   path.update({name: name});
-// }
-
-
-// function pushWebpage(path, url) {
-//   path.update({url: url});
-// }
-
-//will be change later depending on how the file is received
-// let projectName = "project1";
-// let webpage = "Google";
-// let url = "this is a url";
-// let phrase = "hi";
-// let index = "123";
-// let comment = "this is a comment";
-
-// pushProject("project1");
-// pushData()
-// pushWebpage(user.child(projectName)
-//                 .child(webpage), url);
-// pushData(user.child(projectName)
-//              .child(webpage), phrase, index, comment);
-// pushWebpage(user.child("project2")
-//                 .child("wikipedia"), "url2");
-// pushData(user.child(projectName)
-//              .child(webpage), "hello", "1", "wow");
