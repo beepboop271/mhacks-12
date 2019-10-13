@@ -59,8 +59,8 @@ app.set('views', '');
 app.get('/webpage', (req, res) => {
   console.log(data);
   console.log();
-  let kms = "";
   let newData = {};
+  let projects = Object.keys(data);
   newData.projects = [];
   //newData = setKV(newData, data);
   //console.log(JSON.stringify(data));
@@ -95,16 +95,8 @@ app.get('/webpage', (req, res) => {
   res.render('HTML Template/website/webpage', {lolXD: kms});
 });
 
-function setKV(outputSource, dataSource) {
-  for (let[key, value] of Object.entries(dataSource)) {
-    if (typeof dataSource[key] === 'object') {
-      outputSource[key] = setKV(outputSource[key], dataSource[key]);
-    } else {
-      outputSource[key] = value;
-    }
-  }
-  return outputSource;
-}
+  res.render('HTML Template/webpage', {data: data, projects: projects});
+});
 
 app.get("/fetchtest", (req, res) => {
   console.log("Something tried to fetch");
