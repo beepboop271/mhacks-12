@@ -205,5 +205,8 @@ em.on("refresh", () => {
 em.on("update", () => {
   em.emit("newData", user);
 });
+em.on("goodData", (goodData) => {
+  data = goodData;
+});
 
 module.exports = em;

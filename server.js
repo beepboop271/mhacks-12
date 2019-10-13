@@ -54,6 +54,7 @@ const io = require('socket.io').listen(server);
 em.on("updateData", (database) => {
   const stringData = JSON.stringify(database);
   io.emit("parsedData", stringData);
+  em.emit("goodData", stringData);
 });
 
 // Emit welcome message on connection
