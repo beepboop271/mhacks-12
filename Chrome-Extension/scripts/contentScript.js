@@ -2,20 +2,7 @@ console.log("ASDASDASD");
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.msg === "note") {
-            console.log(request.phrase);
-            let name = window.location.hostname.replace(/\./g, "-");
-            let projectName = "first-project";
-
-
-            postNoteData({
-                path: projectName + "***" + name,
-                phrase: request.data.selection,
-                index: 0,
-                comment: "no comment",
-                url: window.location.href
-            });
-        } else if (request.msg === "comment") {
+        if (request.msg === "comment") {
             let userSelection = window.getSelection().getRangeAt(0);
 
             let nodeData = userSelection.startContainer;
@@ -28,12 +15,20 @@ chrome.runtime.onMessage.addListener(
             let comment = prompt("Enter a note");
             console.log(comment);
 
-           let safeRanges = getSafeRanges(userSelection);
+            let safeRanges = getSafeRanges(userSelection);
             for (let i = 0; i < safeRanges.length; i++) {
                 highlightRange(safeRanges[i]);
             }
 
-
+            let name = window.location.hostname.replace(/\./g, "-");
+            let projectName = "first-project";
+            postNoteData({
+                path: projectName + "***" + name,
+                phrase: request.data.selection,
+                index: 0,
+                comment: "no comment",
+                url: window.location.href
+            });
         }
 });
 
