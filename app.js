@@ -73,16 +73,23 @@ app.get('/webpage', (req, res) => {
       kms += "<h4>" + websiteName + "</h4>";
       for (let misc of Object.keys(data[projectName][websiteName])) {
         if (typeof data[projectName][websiteName][misc] === "object") {
+          kms += "<div class='note-data'>";
           for (let [bs, moreBS] of Object.entries(data[projectName][websiteName][misc])) {
-            console.log(data[projectName][websiteName][misc][bs]);
-            kms += "<p>" + bs + ": " + moreBS + "<p/>";
+            //console.log(data[projectName][websiteName][misc][bs]);
+            if (bs === "url") {
+              kms += "<p>" + bs + ": " + "<a href='" + data[projectName][websiteName][misc][bs] + "'>" + moreBS + "</a><p/>";
+            } else {
+              kms += "<p>" + bs + ": " + moreBS + "<p/>";
+            }
           }
+          kms += "</div>";
         } else {
           kms += "<h5>" + misc + "</h5>";
           kms += data[projectName][websiteName][misc];
         }
       }
     }
+    kms += "<hr>";
   }
 
   res.render('HTML Template/webpage', {lolXD: kms});
