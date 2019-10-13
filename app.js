@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const mustacheExpress = require('mustache-express');
 //const cors = require("cors");
 const events = require("events");
+const test = require("./HTML Template/js/test");
+var data = {"kill-me":{"google":{"-Lr08zBxw8WjjUOYRnvF":{"comments":"nocomment","index":0,"phrase":"asd"},"url":"tffest"},"hub":{"-Lr0BRwy769DvPitKkhr":{"comments":"nocomment","index":0,"phrase":"CheckoutourQuickstarttutorialsforeachproduct-fast5-10minutetutorialstogetyouupandrunningwithyourfirstAPIcallordeployment.Ontheleftnavigationbarforeachproductdocumentationpage,wehavelinkstoothertutorials."},"-Lr0BSceqddgUr8pWSWD":{"comments":"nocomment","index":0,"phrase":"WhatproductsshouldItry?"},"-Lr0BUdd7py_GibYCXAW":{"comments":"nocomment","index":0,"phrase":"WhatisGoogleCloud?GoogleCloudisasuiteofdeveloper"},"url":"teffst"}},"project1":{"Google":{"-Lr-8Vn3RMiQSWUd2zEn":{"comments":"thisisacomment","index":"123","phrase":"hi"},"-Lr-8Vn7g0g8By4sk-uV":{"comments":"wow","index":"1","phrase":"hello"},"url":"thisisaurl"},"asdf":{"-Lr-gffppIldwaqVpNTs":{"comments":"aasfdasdfasd","index":"a","phrase":"b"},"-Lr0B3Ub2wFHoF0xeZLt":{"comments":"h","index":"i","phrase":"hi"},"-Lr0BxjinDaV2v8OgZbl":{"comments":"h","index":"i","phrase":"hi"},"-Lr0CLVWwS9avu_uBPTD":{"comments":"h","index":"i","phrase":"hi"},"-Lr0CPSvIsyQ3tHSBXUT":{"comments":"h","index":"i","phrase":"hi"},"url":"teffst"},"wikipedia":{"-Lr029kTsNMm9_o_SYK6":{"comments":"hi","index":"1","phrase":"hi"},"-Lr0DXjvwp4dC-8w4Gx-":{"comments":"h","index":"i","phrase":"hi"},"url":"tffest"}},"project2":{"wikipedia":{"-Lr-BNBLsUjS4H4ImFiG":{"comments":"","index":"7","phrase":"importanatsentence"},"url":"url1"}}}
+
 
 const em = new events.EventEmitter();
 
@@ -21,9 +24,25 @@ const app = express();
 app.engine('html', mustacheExpress());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(express.static('HTML Template'));
 app.set('view engine', 'html');
 app.set('views', '');
 //app.use(cors);
+
+app.get('/webpage', (req, res) => {
+  console.log(data);
+  console.log();
+  let newData = {};
+  let projects = Object.keys(data);
+  newData.projects = [];
+  for (var [key, value] in Object.entries(data)) {
+    console.log(key + ": " + value);
+  }
+
+  console.log(newData.projects);
+
+  res.render('HTML Template/webpage', {data: data, projects: projects});
+});
 
 app.get("/fetchtest", (req, res) => {
   console.log("Something tried to fetch");

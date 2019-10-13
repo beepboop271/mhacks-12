@@ -19,7 +19,7 @@ function send404(res) {
 }
 
 function sendFile(res, filepath, data) {
-  res.writeHead(200, {"content-type": mime.lookup(filepath)});
+  res.writeHead(200, {"content-type": mime.getType(filepath)});
   res.end(data);
 }
 
