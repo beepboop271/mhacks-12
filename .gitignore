@@ -1,5 +1,5 @@
 /.vscode
-auth.json
+/auth.json
 Chrome-Extension/.idea/misc.xml
 Chrome-Extension/.idea/modules.xml
 Chrome-Extension/.idea/workspace.xml
@@ -13,3 +13,4 @@ HTML Template/.idea/HTML Template.iml
 HTML Template/.idea/misc.xml
 HTML Template/.idea/modules.xml
 HTML Template/.idea/workspace.xml
+
