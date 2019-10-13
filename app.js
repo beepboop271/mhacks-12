@@ -50,15 +50,22 @@ app.post("/new/project", (req, res) => {
 });
 
 app.post("/new/note", (req, res) => {
+    console.log(req.body);
+    /*
   getReferenceFromPath(req.body.path).child("url").on("value", (snapshot) => {
-    if(!snapshot.val()) {
+    /*
+      if(!snapshot.val()) {
       getReferenceFromPath(req.body.path).update({"url":req.body.url});
     }
+
   });
+
+     */
   pushData(getReferenceFromPath(req.body.path),
            req.body.phrase,
            req.body.index,
-           req.body.comment);
+           req.body.comment,
+           req.body.url);
   res.end("yes");
 });
 
@@ -87,11 +94,12 @@ function pushProject(path) {
   em.emit("update");
 }
 
-function pushData(path, phrase, index, comment) {
+function pushData(path, phrase, index, comment, url) {
   path.push({
     phrase: phrase,
     index: index,
-    comments: comment
+    comments: comment,
+    url: url
   });
   em.emit("update");
 }

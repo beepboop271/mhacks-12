@@ -10,9 +10,19 @@ selections = [];
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     selections.push(info.selectionText);
+    /* Requests
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {
             msg: "note",
+            data: {
+                selection: info.selectionText
+            }
+        });
+    });
+     */
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+            msg: "comment",
             data: {
                 selection: info.selectionText
             }
