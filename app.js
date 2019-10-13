@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const mustacheExpress = require('mustache-express');
 //const cors = require("cors");
 const events = require("events");
-const test = require("./HTML Template/js/test");
+const test = require("./HTML Template/website/js/test");
 var data = {
   "project1": {
     "-Lr2OjfmmSZolcm8cs5u": { "initial": "value" },
@@ -92,7 +92,7 @@ app.get('/webpage', (req, res) => {
     kms += "<hr>";
   }
 
-  res.render('HTML Template/webpage', {lolXD: kms});
+  res.render('HTML Template/website/webpage', {lolXD: kms});
 });
 
 function setKV(outputSource, dataSource) {
