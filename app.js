@@ -5,7 +5,34 @@ const mustacheExpress = require('mustache-express');
 //const cors = require("cors");
 const events = require("events");
 const test = require("./HTML Template/js/test");
-var data = {"kill-me":{"google":{"-Lr08zBxw8WjjUOYRnvF":{"comments":"nocomment","index":0,"phrase":"asd"},"url":"tffest"},"hub":{"-Lr0BRwy769DvPitKkhr":{"comments":"nocomment","index":0,"phrase":"CheckoutourQuickstarttutorialsforeachproduct-fast5-10minutetutorialstogetyouupandrunningwithyourfirstAPIcallordeployment.Ontheleftnavigationbarforeachproductdocumentationpage,wehavelinkstoothertutorials."},"-Lr0BSceqddgUr8pWSWD":{"comments":"nocomment","index":0,"phrase":"WhatproductsshouldItry?"},"-Lr0BUdd7py_GibYCXAW":{"comments":"nocomment","index":0,"phrase":"WhatisGoogleCloud?GoogleCloudisasuiteofdeveloper"},"url":"teffst"}},"project1":{"Google":{"-Lr-8Vn3RMiQSWUd2zEn":{"comments":"thisisacomment","index":"123","phrase":"hi"},"-Lr-8Vn7g0g8By4sk-uV":{"comments":"wow","index":"1","phrase":"hello"},"url":"thisisaurl"},"asdf":{"-Lr-gffppIldwaqVpNTs":{"comments":"aasfdasdfasd","index":"a","phrase":"b"},"-Lr0B3Ub2wFHoF0xeZLt":{"comments":"h","index":"i","phrase":"hi"},"-Lr0BxjinDaV2v8OgZbl":{"comments":"h","index":"i","phrase":"hi"},"-Lr0CLVWwS9avu_uBPTD":{"comments":"h","index":"i","phrase":"hi"},"-Lr0CPSvIsyQ3tHSBXUT":{"comments":"h","index":"i","phrase":"hi"},"url":"teffst"},"wikipedia":{"-Lr029kTsNMm9_o_SYK6":{"comments":"hi","index":"1","phrase":"hi"},"-Lr0DXjvwp4dC-8w4Gx-":{"comments":"h","index":"i","phrase":"hi"},"url":"tffest"}},"project2":{"wikipedia":{"-Lr-BNBLsUjS4H4ImFiG":{"comments":"","index":"7","phrase":"importanatsentence"},"url":"url1"}}}
+var data = {
+  "project1": {
+    "-Lr2OjfmmSZolcm8cs5u": { "initial": "value" },
+    "google": {
+      "-Lr2PyMZ5nB067Wt7CVQ": {
+        "comments": "hi",
+        "index": "6",
+        "phrase": "lol",
+        "url": "www.google.com"
+      },
+      "-Lr2Q2P-qYYsDNUCFC8a": {
+        "comments": "hi",
+        "index": "6",
+        "phrase": "lol",
+        "url": "www.google234.com"
+      }
+    },
+    "wikipedia": {
+      "-Lr2Q132zqx_3A8u8056": {
+        "comments": "hi",
+        "index": "6",
+        "phrase": "lol",
+        "url": "www.google.com"
+      }
+    }
+  },
+  "project2": { "-Lr2Q7-BK_BcnfmRH2-K": { "initial": "value" } }
+};
 
 
 const em = new events.EventEmitter();
@@ -32,17 +59,45 @@ app.set('views', '');
 app.get('/webpage', (req, res) => {
   console.log(data);
   console.log();
+  let kms = "";
   let newData = {};
-  let projects = Object.keys(data);
   newData.projects = [];
-  for (var [key, value] in Object.entries(data)) {
-    console.log(key + ": " + value);
+  //newData = setKV(newData, data);
+  //console.log(JSON.stringify(data));
+  //console.log(JSON.parse(JSON.stringify(data)));
+  //console.log(data["project1"]["google"]["-Lr2PyMZ5nB067Wt7CVQ"]);
+  for (let projectName of Object.keys(data)) {
+    //console.log(data[projectName]["google"]["-Lr2PyMZ5nB067Wt7CVQ"]);
+    kms += "<h3>" + projectName + "</h3>";
+    for (let websiteName of Object.keys(data[projectName])) {
+      kms += "<h4>" + websiteName + "</h4>";
+      for (let misc of Object.keys(data[projectName][websiteName])) {
+        if (typeof data[projectName][websiteName][misc] === "object") {
+          for (let [bs, moreBS] of Object.entries(data[projectName][websiteName][misc])) {
+            console.log(data[projectName][websiteName][misc][bs]);
+            kms += "<p>" + bs + ": " + moreBS + "<p/>";
+          }
+        } else {
+          kms += "<h5>" + misc + "</h5>";
+          kms += data[projectName][websiteName][misc];
+        }
+      }
+    }
   }
 
-  console.log(newData.projects);
-
-  res.render('HTML Template/webpage', {data: data, projects: projects});
+  res.render('HTML Template/webpage', {lolXD: kms});
 });
+
+function setKV(outputSource, dataSource) {
+  for (let[key, value] of Object.entries(dataSource)) {
+    if (typeof dataSource[key] === 'object') {
+      outputSource[key] = setKV(outputSource[key], dataSource[key]);
+    } else {
+      outputSource[key] = value;
+    }
+  }
+  return outputSource;
+}
 
 app.get("/fetchtest", (req, res) => {
   console.log("Something tried to fetch");
