@@ -2,4 +2,4 @@
 * text=auto
 
 # ignore vendored css, js, etc.
-"HTML Template/website/vendor/*" linguist-vendored
+"HTML Template/website/vendor/**" linguist-vendored
