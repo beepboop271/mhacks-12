@@ -3,3 +3,5 @@
 
 # ignore vendored css, js, etc.
 "HTML Template/website/vendor/**" linguist-vendored
+"HTML Template/website/css/**" linguist-vendored
+"HTML Template/website/scss/**" linguist-vendored
